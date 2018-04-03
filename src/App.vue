@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-  	<leftNav></leftNav>
-  	<div class="main">
-    	<router-view/>
+    <leftNav></leftNav>
+    <div class="main">
+      <router-view/>
     </div>
   </div>
 </template>
@@ -12,7 +12,7 @@ import leftNav from '@/components/common/leftNav'
 export default {
   name: 'app',
   components:{
-  	leftNav
+    leftNav
   }
 }
 </script>
@@ -25,16 +25,16 @@ export default {
   color: #2c3e50;
 }
 .main{
-	float: left;
-	width: 95%;
-	background-color: #eff2f7;
-	height: 100%;
-	overflow: hidden;
+  float: left;
+  width: 95%;
+  background-color: #eff2f7;
+  height: 100%;
+  overflow: hidden;
 }
 .el-tabs__nav{
-	margin-left:20px ;
+  margin-left:20px ;
 }
 .el-tabs__active-bar{
-	width: 28px !important;
+  width: 28px !important;
 }
 </style>

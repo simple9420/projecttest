@@ -34,14 +34,14 @@
 					<div class="title">常用商品</div>
 					<div class="foten-goods-list">
 						<ul>
-							<li v-for="goods in oftenGoods">
+							<li v-for="goods in oftenGoods" @click="addOrderList(goods)">
 								<span>{{goods.goodsName}}</span>
 								<span class="o-price">￥{{goods.price}}元</span>
 							</li>
 						</ul>
 					</div>
 				</div>
-				
+
 				<div class="goods-type">
 					<el-tabs>
 						<el-tab-pane label="汉堡">
@@ -53,7 +53,7 @@
 										<span class="foodPrice">{{goods.price}}元</span>
 									</li>
 								</ul>
-							</div>							
+							</div>
 						</el-tab-pane>
 						<el-tab-pane label="小食">
 							<div>
@@ -64,7 +64,7 @@
 										<span class="foodPrice">{{goods.price}}元</span>
 									</li>
 								</ul>
-							</div>	
+							</div>
 						</el-tab-pane>
 						<el-tab-pane label="饮料">
 							<div>
@@ -75,7 +75,7 @@
 										<span class="foodPrice">{{goods.price}}元</span>
 									</li>
 								</ul>
-							</div>	
+							</div>
 						</el-tab-pane>
 						<el-tab-pane label="套餐">
 							<div>
@@ -86,7 +86,7 @@
 										<span class="foodPrice">{{goods.price}}元</span>
 									</li>
 								</ul>
-							</div>	
+							</div>
 						</el-tab-pane>
 					</el-tabs>
 				</div>
@@ -96,66 +96,66 @@
 </template>
 
 <script>
-	import axios from 'axios';
-	export default{
-		name:'Pos',
-		data(){
-			return{
-				tableData: [
-					{
-			          goodsName: '可口可乐',
-			          price: 8,
-			          count:1
-			       	},
-			       	{
-			          goodsName: '香辣鸡腿堡',
-			          price: 15,
-			          count:1
-			       	},
-			       	{
-			          goodsName: '爱心薯条',
-			          price: 8,
-			          count:1
-			       	},
-			       	{
-			          goodsName: '甜筒',
-			          price: 8,
-			          count:1
-			         }
-			    ],
-			    oftenGoods:[],
-			    type0Goods:[],
-			    type1Goods:[],
-			    type2Goods:[],
-			    type3Goods:[]
-			}
-		},
-		created:function(){
-			axios.get('http://jspang.com/DemoApi/oftenGoods.php')
-			.then(reponse=>{
-				this.oftenGoods = reponse.data;
-			})
-			.catch(error=>{
-				console.log(error);
-			})
-			
-			axios.get('http://jspang.com/DemoApi/typeGoods.php')
-			.then(reponse=>{
-				this.type0Goods = reponse.data[0];
-				this.type1Goods = reponse.data[1];
-				this.type2Goods = reponse.data[2];
-				this.type3Goods = reponse.data[3];
-			})
-			.catch(error=>{
-				console.log(error)
-			})
-		},
-		mounted:function(){
-			var orderHeight = document.body.clientHeight;
-			console.log(orderHeight);
-			document.getElementById('order-list').style.height = orderHeight+"px";
-		}
-	}
+import axios from 'axios'
+export default{
+  name: 'Pos',
+  data () {
+    return {
+      	tableData: [],
+	    oftenGoods: [],
+	    type0Goods: [],
+	    type1Goods: [],
+	    type2Goods: [],
+	    type3Goods: []
+    }
+  },
+  created: function () {
+    axios.get('http://jspang.com/DemoApi/oftenGoods.php')
+      .then(reponse => {
+        this.oftenGoods = reponse.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+    axios.get('http://jspang.com/DemoApi/typeGoods.php')
+      .then(reponse => {
+        this.type0Goods = reponse.data[0]
+        this.type1Goods = reponse.data[1]
+        this.type2Goods = reponse.data[2]
+        this.type3Goods = reponse.data[3]
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  },
+  mounted: function () {
+    var orderHeight = document.body.clientHeight
+    console.log(orderHeight)
+    document.getElementById('order-list').style.height = orderHeight + 'px'
+  },
+  methods:{
+  	addOrderList(goods){
+  		//商品是否已经存在订单列表
+  		let isHave = false;
+		for (let i=0; i<this.tableData.length;i++){
+          	console.log(this.tableData[i].goodsId);
+	          if(this.tableData[i].goodsId==goods.goodsId){
+	              isHave=true; //存在
+	          }
+      }
+  		//根据判断的值编写业务逻辑
+  		if(isHave){
+  			//改变列表中商品数量
+  			let arr = this.tableData.filter(o=>o.goodsId == goods.goodsId);
+  			arr[0].count++;
+  		}else{
+  			let newGoods={goodsId:goods.goodsId,goodsName:goods.goodsName,price:goods.price,count:1};
+  			this.tableData.push(newGoods);
+  		}
+  	}
+  }
+}
 </script>
 
 <style scoped="scoped">

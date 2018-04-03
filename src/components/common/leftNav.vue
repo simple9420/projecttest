@@ -30,9 +30,9 @@
 </template>
 
 <script>
-	export default{
-		
-	}
+export default{
+
+}
 </script>
 
 <style>
@@ -47,7 +47,7 @@
 	.icon{
 		display: inline-block;
 		width: 30px;
-		height: 30px;		
+		height: 30px;
 	}
 	.icon_dp{
 		background: url(../../assets/images/dp.png) no-repeat;
